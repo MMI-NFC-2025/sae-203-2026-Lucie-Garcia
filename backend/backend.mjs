@@ -1,9 +1,25 @@
 import PocketBase from "pocketbase";
 const pb = new PocketBase("http://127.0.0.1:8090");
 
+export { pb };
+
+
+export async function getImageUrl(record, imageField) {
+    return pb.files.getURL(record, record[imageField]);
+}
+
 export async function allArtistes() {
+    return await pb.collection("artistes").getFullList({
+        sort: "date",
+        expand: "scene"
+    });
+}
+
+
+export async function Artistes() {
     return await pb.collection("artistes").getFullList({ sort: "date" });
 }
+
 
 export async function allScene() {
     return await pb.collection("scenes").getFullList({ sort: "nom" });

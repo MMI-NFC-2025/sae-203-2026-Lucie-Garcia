@@ -1,7 +1,7 @@
-import { allArtistes, allScene, artisteSort, getArtiste, getScene, getScenesBySceneID, getArtistesBySceneName, newArtiste, modifyArtiste, deleteArtiste } from "./backend.mjs";
+import { Artistes, allScene, artisteSort, getArtiste, getScene, getScenesBySceneID, getArtistesBySceneName, newArtiste, modifyArtiste, deleteArtiste } from "./backend.mjs";
 /*
 try {
-    const artistes = await allArtistes();
+    const artistes = await Artistes();
     console.log(artistes);
 } catch (error) {
     console.error("Error fetching artistes:", error);

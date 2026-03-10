@@ -1,0 +1,35 @@
+---
+import PbImage from "./PbImage.astro";
+import { formatDate } from "../../backend/helpers";
+import LocIcon from "../assets/icons/localisation.svg";
+
+const { ...artistes } = Astro.props;
+---
+
+<article
+    class="flex flex-row items-center gap-4 bg-white rounded-3xl p-4 shadow-lg shadow-purple-100 m-0"
+>
+    <PbImage
+        record={artistes}
+        field="photoPrincipale"
+        alt={artistes.nom}
+        classImg="w-24 h-24 object-cover rounded-2xl"
+    />
+    <div class="gap-1 flex flex-col">
+        <h2 class="text-xl font-bold text-blue-500">{artistes.nom}</h2>
+        <div class="flex items-center">
+            <img
+                src="/src/assets/icons/date.svg"
+                alt="date"
+                class="w-4 h-4 inline-block mr-1"
+            />
+            <p class="text-zinc-900">{formatDate(artistes.date)}</p>
+        </div>
+        <div class="flex items-center">
+            <LocIcon class="text-blue-500 w-4 h-4 inline-block mr-1" />
+            <p class="font-semibold text-zinc-900">
+                {artistes.expand?.scene?.nom ?? "Scene non definie"}
+            </p>
+        </div>
+    </div>
+</article>

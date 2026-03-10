@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getArtiste } from "../../../backend/backend.mjs";
+const id = Astro.params.id;
+
+const artiste = await getArtiste(id);
+if (!artiste) {
+    console.error(`Artiste with id ${id} not found`);
+    return Astro.redirect("/artistes");
+}
+---

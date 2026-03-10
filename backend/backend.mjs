@@ -15,6 +15,14 @@ export async function allArtistes() {
     });
 }
 
+export async function getArtiste(id) {
+    return await pb.collection("artistes").getOne(id
+        , {
+            expand: "scene"
+        });
+}
+
+
 
 export async function Artistes() {
     return await pb.collection("artistes").getFullList({ sort: "date" });
@@ -29,7 +37,7 @@ export async function artisteSort() {
     return await pb.collection("artistes").getFullList({ sort: "nom" });
 }
 
-export async function getArtiste(id) {
+export async function Artiste(id) {
     return await pb.collection("artistes").getOne(id);
 }
 

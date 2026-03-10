@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import CardArtistes from "../../components/CardArtistes.astro";
+import SearchIcon from "../../assets/icons/search.svg";
 
 import { allArtistes } from "../../../backend/backend.mjs";
 
@@ -9,6 +10,22 @@ const artistes = await allArtistes();
 
 <Layout>
     <div class="bg-grad-diagonal pb-10">
+        <form class="flex justify-center px-6 pt-6">
+            <label
+                class="relative w-full h-18 max-lg:h-14 max-w-4xl"
+                for="artist-search"
+            >
+                <SearchIcon
+                    class="absolute left-5 top-1/2 h-6 w-6 -translate-y-1/2 text-blue-800"
+                />
+                <input
+                    id="artist-search"
+                    type="text"
+                    placeholder="Rechercher un artiste..."
+                    class="w-full h-18 max-lg:h-14 rounded-2xl border-2 border-blue-800 bg-white/85 py-7 pl-15 pr-8 text-2xl text-gray-900 placeholder:text-gray-300"
+                />
+            </label>
+        </form>
         <div
             class="gap-3 max-md:flex-col max-md:flex p-5 md:grid md:grid-cols-2 md:space-x-3 lg:grid lg:grid-cols-3 lg:space-x-3 lg:p-10"
         >

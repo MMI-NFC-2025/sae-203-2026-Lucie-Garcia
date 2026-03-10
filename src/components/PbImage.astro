@@ -7,8 +7,4 @@ const { record, field, alt, classImg } = Astro.props;
 const imageUrl = record ? pb.files.getURL(record, record[field]) : null;
 ---
 
-{
-    imageUrl && (
-        <img class={classImg} src={imageUrl} alt={alt || "photoPrincipale"} />
-    )
-}
+{imageUrl && <img class={classImg} src={imageUrl} alt={alt || "photo"} />}

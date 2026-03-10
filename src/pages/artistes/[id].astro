@@ -1,6 +1,10 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getArtiste } from "../../../backend/backend.mjs";
+import PbImage from "../../components/PbImage.astro";
+import { pb } from "../../../backend/backend.mjs";
+import PhotoIcon from "../../assets/icons/photo.svg";
+import { formatDate, formatTime, formatDay } from "../../../backend/helpers";
 const id = Astro.params.id;
 
 const artiste = await getArtiste(id);
@@ -9,3 +13,69 @@ if (!artiste) {
     return Astro.redirect("/artistes");
 }
 ---
+
+<Layout>
+    <div class="bg-grad-diagonal pb-10">
+        <PbImage
+            record={artiste}
+            field="photoPrincipale"
+            alt={artiste.nom}
+            classImg="w-full h-120 object-cover  "
+        />
+        <div
+            class="m-10 bg-grad-blue rounded-3xl p-6 shadow-[0_25px_25px_rgba(0,0,0,0.20)] bottom-20 relative text-white"
+        >
+            <h1 class="text-4xl font-bold mb-6 font-deco">
+                {artiste.nom}
+            </h1>
+            <p>{formatDay(artiste.date)}</p>
+            <p>{formatTime(artiste.date)}</p>
+            <p>{artiste.expand?.scene.nom}</p>
+            <p>{artiste.genre}</p>
+
+            <p class="text-lg mb-4">
+                {artiste.description || "Aucune description disponible."}
+            </p>
+        </div>
+        <div class="flex m-5">
+            <PhotoIcon class="w-6 h-6 inline-block mr-2" />
+            <h2 class="text-2xl font-semibold text-gray-900 mb-3 font-deco">
+                Galerie Photos
+            </h2>
+        </div>
+        {
+            artiste.galeriePhoto?.length > 0 ? (
+                <div class="mx-auto max-w-full px-4 pt-1">
+                    <div class="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                        <div class="flex snap-x snap-mandatory gap-4">
+                            {artiste.galeriePhoto.map(
+                                (fileName: string, index: number) => (
+                                    <img
+                                        src={pb.files.getURL(artiste, fileName)}
+                                        alt={`${artiste.nom} - photo ${index + 1}`}
+                                        class="rounded-3xl h-60 w-200 min-w-80 snap-center object-cover"
+                                    />
+                                ),
+                            )}
+                        </div>
+                    </div>
+
+                    {artiste.galeriePhoto.length > 1 && (
+                        <div class="flex justify-center gap-3 pt-6">
+                            {artiste.galeriePhoto.map(
+                                (_: string, index: number) => (
+                                    <span
+                                        class={`h-3 w-3 rounded-full ${index === 0 ? "bg-violet-500" : "bg-gray-300"}`}
+                                        aria-hidden="true"
+                                    />
+                                ),
+                            )}
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <p class="text-gray-600">Aucune photo de galerie disponible.</p>
+            )
+        }
+    </div>
+</Layout>

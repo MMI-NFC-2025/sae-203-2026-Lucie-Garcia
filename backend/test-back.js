@@ -1,4 +1,4 @@
-import { Artistes, allScene, artisteSort, getArtiste, getScene, getScenesBySceneID, getArtistesBySceneName, newArtiste, modifyArtiste, deleteArtiste } from "./backend.mjs";
+import { Artistes, allScene, artisteSort, Artiste, getScene, getScenesBySceneID, getArtistesBySceneName, newArtiste, modifyArtiste, deleteArtiste } from "./backend.mjs";
 /*
 try {
     const artistes = await Artistes();
@@ -25,7 +25,7 @@ try {
 
 
 try {
-    const artiste = await getArtiste("bmf423t7mq7cwuc");
+    const artiste = await Artiste("bmf423t7mq7cwuc");
     console.log(artiste);
 } catch (error) {
     console.error("Error fetching artiste:", error);

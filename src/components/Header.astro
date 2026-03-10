@@ -1,0 +1,228 @@
+---
+import "../styles/global.css";
+import AccueilIcon from "../assets/icons/accueil.svg";
+import ProposIcon from "../assets/icons/propos.svg";
+import ProgrammeIcon from "../assets/icons/programme.svg";
+import ArtistesIcon from "../assets/icons/artistes.svg";
+import ScenesIcon from "../assets/icons/scenes.svg";
+import ContactIcon from "../assets/icons/contact.svg";
+import ProfilIcon from "../assets/icons/profil.svg";
+import InfosIcon from "../assets/icons/infos.svg";
+import BilletsIcon from "../assets/icons/billets.svg";
+import BackIcon from "../assets/icons/back.svg";
+
+const pathname = Astro.url.pathname;
+const isHome = pathname === "/";
+
+// Les 2 const suivantes sont faites a l'aide d'IA je n'avais pas les connaissances pour realisé ce type d'effets.
+
+const isActivePath = (href: string) => {
+    if (href === "/") {
+        return pathname === "/";
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
+};
+
+const navItemClass = (href: string) => {
+    if (href === "/" && isActivePath(href)) {
+        return [
+            "flex items-center justify-center flex-col text-gray-400",
+            "max-lg:w-26 max-lg:h-26 max-lg:rounded-3xl max-lg:p-4 max-lg:shadow-lg max-lg:self-center max-lg:justify-self-center",
+            "text-gray-900 max-lg:bg-white max-lg:shadow-purple-100",
+            "lg:bg-zinc-900 lg:text-white lg:shadow-blue-950 lg:shadow-lg lg:rounded-2xl lg:px-4 lg:py-2",
+        ].join(" ");
+    }
+
+    return [
+        "flex items-center justify-center flex-col",
+        "max-lg:w-26 max-lg:h-26 max-lg:rounded-3xl max-lg:p-4 max-lg:shadow-lg max-lg:self-center max-lg:justify-self-center",
+        isActivePath(href)
+            ? "bg-white w-full h-full rounded-3xl p-4 shadow-lg shadow-purple-100 self-center justify-self-center text-blue-500"
+            : `${isHome ? "lg:text-gray-400 " : ""}text-gray-900 max-lg:bg-white max-lg:shadow-purple-100`,
+    ].join(" ");
+};
+
+const navIconClass = "w-8 h-8";
+---
+
+<header
+    class={`${
+        isHome
+            ? "bg-black text-white"
+            : "bg-sky-50 border-b-2 border-blue-500 text-zinc-900"
+    } py-4 px-5`}
+>
+    <div class="flex items-center justify-between">
+        <div class="flex items-center">
+            <h1 class={`${isHome ? "block" : "hidden"} text-2xl font-bold`}>
+                Les rives du territoire
+            </h1>
+            <button
+                id="back-btn"
+                type="button"
+                aria-label="Retour"
+                class={`${isHome ? "hidden" : "inline-flex"} items-center justify-center`}
+            >
+                <BackIcon class="w-6 h-6 text-gray-900" />
+            </button>
+        </div>
+        <button
+            class={`group *:ease relative z-20 flex h-6 w-7 flex-col justify-between *:h-1 *:w-full *:bg-gray-900 *:rounded-2xl ${isHome ? "*:bg-white" : ""} *:transition-all *:duration-300 lg:hidden`}
+            id="menu-btn"
+            aria-label="menu"
+            aria-expanded="false"
+            aria-controls="menu"
+        >
+            <span
+                class="group-aria-expanded:translate-y-2.5 group-aria-expanded:rotate-45 group-aria-expanded:bg-white"
+                aria-hidden="true"></span>
+            <span
+                class="group-aria-expanded:opacity-0 group-aria-expanded:bg-white"
+                aria-hidden="true"></span>
+            <span
+                class="group-aria-expanded:-translate-y-2.5 group-aria-expanded:-rotate-45 group-aria-expanded:bg-white"
+                aria-hidden="true"></span>
+        </button>
+    </div>
+    <h1
+        class={`${isHome ? "hidden" : "block"} text-2xl font-bold text-center absolute top-0 left-1/2 transform -translate-x-1/2 mt-3`}
+    >
+        {
+            Astro.url.pathname === "/apropos"
+                ? "À propos"
+                : Astro.url.pathname === "/programme"
+                  ? "Programme"
+                  : Astro.url.pathname === "/artistes"
+                    ? "Artistes"
+                    : Astro.url.pathname === "/scenes"
+                      ? "Scènes"
+                      : Astro.url.pathname === "/contact"
+                        ? "Contact"
+                        : Astro.url.pathname === "/profil"
+                          ? "Profil"
+                          : Astro.url.pathname === "/infos"
+                            ? "Infos pratiques"
+                            : Astro.url.pathname === "/billets"
+                              ? "Billets"
+                              : ""
+        }
+    </h1>
+
+    <nav
+        id="menu"
+        class="hidden lg:block max-lg:bg-grad-blue max-lg:fixed max-lg:inset-0"
+        aria-hidden="true"
+    >
+        <div
+            class="gap-5 align-middle justify-center grid grid-cols-3 lg:grid-cols-9 text-gray-900 mt-4 max-lg:m-5 max-lg:mt-20"
+        >
+            <a
+                href="/"
+                class={navItemClass("/")}
+                aria-current={isActivePath("/") ? "page" : undefined}
+            >
+                <AccueilIcon class={navIconClass} />
+                Accueil</a
+            >
+            <a
+                href="/apropos"
+                class={navItemClass("/apropos")}
+                aria-current={isActivePath("/apropos") ? "page" : undefined}
+            >
+                <ProposIcon class={navIconClass} />
+                À propos</a
+            >
+            <a
+                href="/programme"
+                class={navItemClass("/programme")}
+                aria-current={isActivePath("/programme") ? "page" : undefined}
+            >
+                <ProgrammeIcon class={navIconClass} />
+                Programme</a
+            >
+            <a
+                href="/artistes"
+                class={navItemClass("/artistes")}
+                aria-current={isActivePath("/artistes") ? "page" : undefined}
+            >
+                <ArtistesIcon class={navIconClass} />
+                Artistes</a
+            >
+
+            <a
+                href="/scenes"
+                class={navItemClass("/scenes")}
+                aria-current={isActivePath("/scenes") ? "page" : undefined}
+            >
+                <ScenesIcon class={navIconClass} />
+                Scènes</a
+            >
+
+            <a
+                href="/contact"
+                class={navItemClass("/contact")}
+                aria-current={isActivePath("/contact") ? "page" : undefined}
+            >
+                <ContactIcon class={navIconClass} />
+                Contact</a
+            >
+
+            <a
+                href="/profil"
+                class={navItemClass("/profil")}
+                aria-current={isActivePath("/profil") ? "page" : undefined}
+            >
+                <ProfilIcon class={navIconClass} />
+                Profil</a
+            >
+
+            <a
+                href="/infos"
+                class={navItemClass("/infos")}
+                aria-current={isActivePath("/infos") ? "page" : undefined}
+            >
+                <InfosIcon class={navIconClass} />
+                Infos</a
+            >
+
+            <a
+                href="/billets"
+                class={navItemClass("/billets")}
+                aria-current={isActivePath("/billets") ? "page" : undefined}
+            >
+                <BilletsIcon class={navIconClass} />
+                Billets</a
+            >
+        </div>
+    </nav>
+</header>
+
+<script>
+    const toggle = document.querySelector("#menu-btn");
+    const nav = document.querySelector("#menu");
+    const page = document.body;
+    const backBtn = document.querySelector("#back-btn");
+
+    if (backBtn) {
+        backBtn.addEventListener("click", () => {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = "/";
+            }
+        });
+    }
+
+    if (toggle && nav) {
+        toggle.addEventListener("click", () => {
+            const isOpen = toggle.getAttribute("aria-expanded") === "true";
+            const shouldOpen = !isOpen;
+
+            toggle.setAttribute("aria-expanded", String(shouldOpen));
+            nav.setAttribute("aria-hidden", String(!shouldOpen));
+            nav.classList.toggle("hidden", !shouldOpen);
+            page.classList.toggle("noscroll", shouldOpen);
+        });
+    }
+</script>

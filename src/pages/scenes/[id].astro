@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getScene } from "../../../backend/backend.mjs";
+
+const id = Astro.params.id;
+
+const scene = await getScene(id);
+if (!scene) {
+    console.error(`Scène with id ${id} not found`);
+    return Astro.redirect("/scenes");
+}
+---
+
+<Layout>
+    <p>scenes</p>
+    <p>{scene.nom}</p>
+</Layout>

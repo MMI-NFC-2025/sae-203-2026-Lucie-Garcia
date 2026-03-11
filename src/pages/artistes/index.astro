@@ -26,12 +26,45 @@ const artistes = await allArtistes();
                 />
             </label>
         </form>
+        <div class="m-5 flex flex-wrap gap-3 align-middle justify-center">
+            <button
+                data-filter-day="1"
+                class="day-filter bg-white p-2 px-4 rounded-4xl ring-1 ring-gray-500 text-gray-900 font-semibold"
+                >Lundi</button
+            >
+            <button
+                data-filter-day="2"
+                class="day-filter bg-white p-2 px-4 rounded-4xl ring-1 ring-gray-500 text-gray-900 font-semibold"
+                >Mardi</button
+            >
+            <button
+                data-filter-day="3"
+                class="day-filter bg-white p-2 px-4 rounded-4xl ring-1 ring-gray-500 text-gray-900 font-semibold"
+                >Mercredi</button
+            >
+            <button
+                data-filter-day="4"
+                class="day-filter bg-white p-2 px-4 rounded-4xl ring-1 ring-gray-500 text-gray-900 font-semibold"
+                >Jeudi</button
+            >
+        </div>
         <div
             class="gap-3 max-md:flex-col max-md:flex p-5 md:grid md:grid-cols-2 md:space-x-3 lg:grid lg:grid-cols-3 lg:space-x-3 lg:p-10"
         >
             {
                 artistes.length > 0 ? (
-                    artistes.map((artistes) => <CardArtistes {...artistes} />)
+                    artistes.map((artiste) => (
+                        <div
+                            class="artiste"
+                            data-day={
+                                artiste.date
+                                    ? String(new Date(artiste.date).getDay())
+                                    : "-1"
+                            }
+                        >
+                            <CardArtistes {...artiste} />
+                        </div>
+                    ))
                 ) : (
                     <p>Aucun événement à afficher.</p>
                 )
@@ -39,3 +72,34 @@ const artistes = await allArtistes();
         </div>
     </div>
 </Layout>
+<script>
+    //@ts-nocheck
+    const dayButtons = document.querySelectorAll(".day-filter");
+    const artistesCards = document.querySelectorAll(".artiste");
+    let activeDay = null;
+
+    const applyFilter = () => {
+        artistesCards.forEach((artiste) => {
+            const isVisible =
+                activeDay === null || artiste.dataset.day === activeDay;
+            artiste.style.display = isVisible ? "block" : "none";
+        });
+
+        dayButtons.forEach((button) => {
+            const isActive = button.dataset.filterDay === activeDay;
+            button.classList.toggle("bg-blue-200", isActive);
+            button.classList.toggle("shadow-2xl", isActive);
+            button.classList.toggle("bg-white", !isActive);
+            button.classList.toggle("ring-1", !isActive);
+            button.classList.toggle("text-gray-900", !isActive);
+        });
+    };
+
+    dayButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const clickedDay = button.dataset.filterDay;
+            activeDay = activeDay === clickedDay ? null : clickedDay;
+            applyFilter();
+        });
+    });
+</script>

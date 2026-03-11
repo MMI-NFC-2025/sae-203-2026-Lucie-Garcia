@@ -1,0 +1,23 @@
+---
+import PbImage from "./PbImage.astro";
+import { formatDate } from "../../backend/helpers";
+import LocIcon from "../assets/icons/localisation.svg";
+
+const { ...scenes } = Astro.props;
+---
+
+<article
+    class="flex flex-row items-center gap-4 bg-white rounded-3xl p-4 shadow-lg shadow-purple-100 m-0"
+>
+    <a href={`/scenes/${scenes.id}`} class="flex items-center gap-4">
+        <PbImage
+            record={scenes}
+            field="photo"
+            alt={scenes.nom}
+            classImg="w-24 h-24 object-cover rounded-2xl"
+        />
+        <div class="gap-1 flex flex-col">
+            <h2 class="text-xl font-bold text-blue-500">{scenes.nom}</h2>
+        </div>
+    </a>
+</article>

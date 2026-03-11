@@ -1,10 +1,281 @@
 ---
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import bgHero from "../assets/img/imagehomepage.avif";
+import ProgIcon from "../assets/icons/programme.svg";
+import Music from "../assets/icons/scenes.svg";
+import Micro from "../assets/icons/artistes.svg";
+import Gens from "../assets/icons/profil.svg";
 ---
 
 <Layout>
-	<h1>Welcome to Astro!</h1>
+	<div class="bg-black text-white">
+		<section class="relative h-150 overflow-hidden">
+			<img
+				src={bgHero.src ?? bgHero}
+				alt="Scene du festival"
+				class="absolute inset-0 h-full w-full object-cover"
+			/>
+
+			<div
+				class="absolute inset-0 bg-linear-to-b from-black/40 via-black/25 to-black/85"
+			>
+			</div>
+			<div class="absolute bottom-0 w-full px-4 pb-4 text-center">
+				<h2 class="text-4xl font-bold leading-tight drop-shadow-lg">
+					Les rives du territoire <span class="text-blue-200"
+						>2026</span
+					>
+				</h2>
+				<p class="mt-1 text-lg font-medium">20 au 23 decembre 2026</p>
+				<p class="text-lg font-semibold text-blue-200">Belfort</p>
+				<a
+					href="/billets"
+					class="mt-4 inline-block rounded-full bg-blue-200 px-15 py-3 text-xl font-semibold text-slate-900"
+					>Reserver mes places</a
+				>
+			</div>
+		</section>
+
+		<section class="bg-gray-900 px-4 py-8">
+			<h3 class="text-center text-3xl font-bold">Programme</h3>
+			<p class="mt-2 text-center text-lg font-light text-gray-400">
+				4 jours de musique exceptionnelle
+			</p>
+			<div class="mt-6 space-y-4 lg:grid lg:grid-cols-4 lg:gap-4">
+				<article
+					class="rounded-3xl border border-slate-500/40 bg-gray-800 p-4 shadow-lg"
+				>
+					<div class="flex items-start justify-between text-blue-200">
+						<p class="text-base font-semibold">Jeudi 20 Dec</p>
+						<ProgIcon class="text-blue-200 w-6 h-6" />
+					</div>
+					<h4 class="text-xl my-2 mt-3 font-bold">
+						Soiree d'ouverture
+					</h4>
+					<p class="mt-1 text-base text-slate-300">
+						Artistes emergents et DJ sets
+					</p>
+				</article>
+				<article
+					class="rounded-3xl border border-slate-500/40 bg-gray-800 p-4 shadow-lg"
+				>
+					<div class="flex items-start justify-between text-blue-200">
+						<p class="text-base font-semibold">Vendredi 21 Dec</p>
+						<Micro class="text-blue-200 w-6 h-6" />
+					</div>
+					<h4 class="mt-1 text-xl font-bold">Tetes d'affiche</h4>
+					<p class="mt-1 text-base text-slate-300">
+						Les plus grands noms de la scene
+					</p>
+				</article>
+				<article
+					class="rounded-3xl border border-slate-500/40 bg-gray-800 p-4 shadow-lg"
+				>
+					<div class="flex items-start justify-between text-blue-200">
+						<p class="text-base font-semibold">Samedi 22 Dec</p>
+						<Music class="text-blue-200 w-6 h-6" />
+					</div>
+					<h4 class="mt-3 my-2 text-xl font-bold">Multi-genres</h4>
+					<p class="mt-1 text-base text-slate-300">
+						Rock, electro, pop et hip-hop
+					</p>
+				</article>
+				<article
+					class="rounded-3xl border border-slate-500/40 bg-gray-800 p-4 shadow-lg mb-4"
+				>
+					<div class="flex items-start justify-between text-blue-200">
+						<p class="text-base font-semibold">Dimanche 23 Dec</p>
+						<Gens class="text-blue-200 w-6 h-6" />
+					</div>
+					<h4 class="mt-3 my-2 text-xl font-bold">Grande finale</h4>
+					<p class="mt-1 text-base text-slate-300">
+						Spectacle exceptionnel de cloture
+					</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="px-4 py-8">
+			<h3 class="text-center text-3xl font-bold">Artistes</h3>
+			<p class="mt-2 text-center text-lg font-light text-gray-400">
+				Une programmation exceptionnelle
+			</p>
+			<div class="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
+				<div>
+					<div
+						class="flex h-32 items-center justify-center rounded-2xl bg-linear-to-br from-fuchsia-500 to-pink-400 text-4xl"
+					>
+						<span aria-hidden="true">🎤</span>
+					</div>
+					<p class="mt-2 text-center text-2xl font-semibold">
+						Artiste 1
+					</p>
+					<p class="text-center text-sm text-slate-400">Electro</p>
+				</div>
+				<div>
+					<div
+						class="flex h-32 items-center justify-center rounded-2xl bg-linear-to-br from-purple-500 to-indigo-400 text-4xl"
+					>
+						<span aria-hidden="true">🎸</span>
+					</div>
+					<p class="mt-2 text-center text-2xl font-semibold">
+						Artiste 2
+					</p>
+					<p class="text-center text-sm text-slate-400">Rock</p>
+				</div>
+				<div>
+					<div
+						class="flex h-32 items-center justify-center rounded-2xl bg-linear-to-br from-emerald-400 to-blue-500 text-4xl"
+					>
+						<span aria-hidden="true">🥁</span>
+					</div>
+					<p class="mt-2 text-center text-2xl font-semibold">
+						Artiste 3
+					</p>
+					<p class="text-center text-sm text-slate-400">Hip-Hop</p>
+				</div>
+				<div>
+					<div
+						class="flex h-32 items-center justify-center rounded-2xl bg-linear-to-br from-orange-500 to-rose-500 text-4xl"
+					>
+						<span aria-hidden="true">🎧</span>
+					</div>
+					<p class="mt-2 text-center text-2xl font-semibold">
+						Artiste 4
+					</p>
+					<p class="text-center text-sm text-slate-400">Pop</p>
+				</div>
+			</div>
+			<div class="mt-6 text-center">
+				<a
+					href="/artistes"
+					class="inline-block rounded-full border border-sky-200 px-5 py-2 text-lg font-medium"
+					>Voir tous les artistes</a
+				>
+			</div>
+		</section>
+
+		<section class="bg-[#0b1831] px-4 py-8">
+			<h3 class="text-center text-3xl font-bold">Infos pratiques</h3>
+			<p class="mt-2 text-center text-lg font-light text-gray-400">
+				Tout ce qu'il faut savoir
+			</p>
+			<div class="mt-7 space-y-5 lg:grid lg:grid-cols-4 lg:gap-6">
+				<div class="flex gap-3">
+					<div
+						class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#8cb8ee] text-sm"
+					>
+						📍
+					</div>
+					<div>
+						<h4 class="text-2xl font-semibold">Lieu</h4>
+						<p class="text-base text-slate-300">
+							Centre-ville de Belfort
+						</p>
+						<p class="text-base text-slate-300">
+							Acces facile en transport
+						</p>
+					</div>
+				</div>
+				<div class="flex gap-3">
+					<div
+						class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#8cb8ee] text-sm"
+					>
+						🎫
+					</div>
+					<div>
+						<h4 class="text-2xl font-semibold">Billetterie</h4>
+						<p class="text-base text-slate-300">
+							Pass 4 jours : 120EUR
+						</p>
+						<p class="text-base text-slate-300">
+							Billets journee : 35EUR
+						</p>
+					</div>
+				</div>
+				<div class="flex gap-3">
+					<div
+						class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#8cb8ee] text-sm"
+					>
+						🏨
+					</div>
+					<div>
+						<h4 class="text-2xl font-semibold">Hebergement</h4>
+						<p class="text-base text-slate-300">
+							Hotels partenaires
+						</p>
+					</div>
+				</div>
+				<div class="flex gap-3">
+					<div
+						class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#8cb8ee] text-sm"
+					>
+						🍴
+					</div>
+					<div>
+						<h4 class="text-2xl font-semibold">Restauration</h4>
+						<p class="text-base text-slate-300">
+							Food trucks varies
+						</p>
+						<p class="text-base text-slate-300">Bars et buvettes</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="px-4 py-8 text-center">
+			<h3 class="text-5xl font-bold">A propos</h3>
+			<p class="mt-2 text-2xl text-slate-300">L'esprit du festival</p>
+			<p class="mt-5 text-lg leading-relaxed text-slate-200">
+				Depuis 2022, notre festival rassemble les amoureux de musique
+				dans une atmosphere unique et conviviale.
+			</p>
+			<p class="mt-4 text-lg leading-relaxed text-slate-200">
+				Decouvrez une programmation variee melant tetes d'affiche
+				internationales et talents emergents, dans un cadre exceptionnel
+				au coeur de Belfort.
+			</p>
+
+			<div class="mt-6 grid grid-cols-3 gap-3 w-full text-center">
+				<div class="">
+					<p class="text-5xl font-bold text-blue-200">50k+</p>
+					<p class="text-sm text-slate-300">Festivaliers</p>
+				</div>
+				<div>
+					<p class="text-5xl font-bold text-blue-200">100+</p>
+					<p class="text-sm text-slate-300">Artistes</p>
+				</div>
+				<div>
+					<p class="text-5xl font-bold text-blue-200">4</p>
+					<p class="text-sm text-slate-300">Scenes</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="bg-[#0d1e3b] px-4 py-8">
+			<h3 class="text-center text-4xl font-bold">Nos partenaires</h3>
+			<div class="mt-6 grid grid-cols-2 gap-4">
+				<div
+					class="rounded-lg bg-white p-3 text-lg font-bold text-slate-700"
+				>
+					PARTENAIRE 1
+				</div>
+				<div
+					class="rounded-lg bg-white p-3 text-lg font-bold text-slate-700"
+				>
+					PARTENAIRE 2
+				</div>
+				<div
+					class="rounded-lg bg-white p-3 text-lg font-bold text-slate-700"
+				>
+					PARTENAIRE 3
+				</div>
+				<div
+					class="rounded-lg bg-white p-3 text-lg font-bold text-slate-700"
+				>
+					PARTENAIRE 4
+				</div>
+			</div>
+		</section>
+	</div>
 </Layout>

@@ -5,6 +5,10 @@ import ProgIcon from "../assets/icons/programme.svg";
 import Music from "../assets/icons/scenes.svg";
 import Micro from "../assets/icons/artistes.svg";
 import Gens from "../assets/icons/profil.svg";
+import Lieu from "../assets/icons/localisation.svg";
+import Billet from "../assets/icons/billets.svg";
+import Hotel from "../assets/icons/lit.svg";
+import Food from "../assets/icons/couverts.svg";
 ---
 
 <Layout>
@@ -21,7 +25,9 @@ import Gens from "../assets/icons/profil.svg";
 			>
 			</div>
 			<div class="absolute bottom-0 w-full px-4 pb-4 text-center">
-				<h2 class="text-4xl font-bold leading-tight drop-shadow-lg">
+				<h2
+					class="text-4xl lg:text-8xl font-bold leading-tight drop-shadow-lg"
+				>
 					Les rives du territoire <span class="text-blue-200"
 						>2026</span
 					>
@@ -30,7 +36,7 @@ import Gens from "../assets/icons/profil.svg";
 				<p class="text-lg font-semibold text-blue-200">Belfort</p>
 				<a
 					href="/billets"
-					class="mt-4 inline-block rounded-full bg-blue-200 px-15 py-3 text-xl font-semibold text-slate-900"
+					class="mt-4 inline-block hover:bg-blue-50 rounded-full bg-blue-200 px-15 lg:px-40 lg:py-6 py-3 text-xl lg:text-3xl font-semibold text-slate-900 transition-transform duration-300 hover:scale-110"
 					>Reserver mes places</a
 				>
 			</div>
@@ -163,9 +169,9 @@ import Gens from "../assets/icons/profil.svg";
 			<div class="mt-7 space-y-5 lg:grid lg:grid-cols-4 lg:gap-6">
 				<div class="flex gap-3">
 					<div
-						class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#8cb8ee] text-sm"
+						class="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm"
 					>
-						📍
+						<Lieu />
 					</div>
 					<div>
 						<h4 class="text-2xl font-semibold">Lieu</h4>
@@ -179,9 +185,9 @@ import Gens from "../assets/icons/profil.svg";
 				</div>
 				<div class="flex gap-3">
 					<div
-						class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#8cb8ee] text-sm"
+						class="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm"
 					>
-						🎫
+						<Billet />
 					</div>
 					<div>
 						<h4 class="text-2xl font-semibold">Billetterie</h4>
@@ -195,9 +201,9 @@ import Gens from "../assets/icons/profil.svg";
 				</div>
 				<div class="flex gap-3">
 					<div
-						class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#8cb8ee] text-sm"
+						class="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm"
 					>
-						🏨
+						<Hotel />
 					</div>
 					<div>
 						<h4 class="text-2xl font-semibold">Hebergement</h4>
@@ -208,9 +214,9 @@ import Gens from "../assets/icons/profil.svg";
 				</div>
 				<div class="flex gap-3">
 					<div
-						class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#8cb8ee] text-sm"
+						class="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm"
 					>
-						🍴
+						<Food />
 					</div>
 					<div>
 						<h4 class="text-2xl font-semibold">Restauration</h4>
@@ -224,8 +230,10 @@ import Gens from "../assets/icons/profil.svg";
 		</section>
 
 		<section class="px-4 py-8 text-center">
-			<h3 class="text-5xl font-bold">A propos</h3>
-			<p class="mt-2 text-2xl text-slate-300">L'esprit du festival</p>
+			<h3 class="text-3xl font-bold">A propos</h3>
+			<p class="mt-2 text-xl text-gray-400 font-light">
+				L'esprit du festival
+			</p>
 			<p class="mt-5 text-lg leading-relaxed text-slate-200">
 				Depuis 2022, notre festival rassemble les amoureux de musique
 				dans une atmosphere unique et conviviale.
@@ -237,8 +245,12 @@ import Gens from "../assets/icons/profil.svg";
 			</p>
 
 			<div class="mt-6 grid grid-cols-3 gap-3 w-full text-center">
-				<div class="">
-					<p class="text-5xl font-bold text-blue-200">50k+</p>
+				<div class="flex flex-col items-center">
+					<p
+						class="text-5xl font-bold text-blue-200 ring-1 ring-white w-fit px-2"
+					>
+						50k+
+					</p>
 					<p class="text-sm text-slate-300">Festivaliers</p>
 				</div>
 				<div>
@@ -252,9 +264,9 @@ import Gens from "../assets/icons/profil.svg";
 			</div>
 		</section>
 
-		<section class="bg-[#0d1e3b] px-4 py-8">
-			<h3 class="text-center text-4xl font-bold">Nos partenaires</h3>
-			<div class="mt-6 grid grid-cols-2 gap-4">
+		<section class="bg-gray-900 px-4 py-8">
+			<h3 class="text-center text-3xl font-bold">Nos partenaires</h3>
+			<div class="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
 				<div
 					class="rounded-lg bg-white p-3 text-lg font-bold text-slate-700"
 				>

@@ -3,5 +3,45 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-    <p>infos</p>
+    <div
+        class="bg-white text-slate-900 px-4 py-10 lg:px-16 lg:py-14 max-w-5xl mx-auto"
+    >
+        <h1 class="text-3xl font-bold mb-10">Infos pratiques</h1>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-bold mb-4">Tarif</h2>
+            <div class="grid grid-cols-2 gap-4 lg:gap-6">
+                <div class="bg-blue-200 rounded-2xl h-60 lg:h-70"></div>
+                <div class="bg-blue-200 rounded-2xl h-60 lg:h-70"></div>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-bold mb-4">Hébergement</h2>
+            <div class="flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:gap-6">
+                <div class="bg-blue-200 rounded-2xl h-40 lg:h-48"></div>
+                <div class="bg-blue-200 rounded-2xl h-40 lg:h-48"></div>
+                <div class="bg-blue-200 rounded-2xl h-40 lg:h-48"></div>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-bold mb-4">Transport &amp; accès</h2>
+            <div class="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+                <div class="bg-blue-200 rounded-2xl h-32"></div>
+                <div class="bg-blue-200 rounded-2xl h-32"></div>
+                <div class="bg-blue-200 rounded-2xl h-32"></div>
+                <div class="bg-blue-200 rounded-2xl h-32"></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex flex-col gap-3 lg:gap-4">
+                <div class="bg-blue-200 rounded-xl h-12"></div>
+                <div class="bg-blue-200 rounded-xl h-12"></div>
+                <div class="bg-blue-200 rounded-xl h-12"></div>
+                <div class="bg-blue-200 rounded-xl h-12"></div>
+            </div>
+        </section>
+    </div>
 </Layout>

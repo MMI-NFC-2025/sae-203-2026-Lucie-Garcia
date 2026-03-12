@@ -1,0 +1,81 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+    <div class="bg-grad-diagonal px-6 py-8 lg:px-10 lg:py-12">
+        <div class="mx-auto flex max-w-5xl flex-col gap-6 lg:gap-8">
+            <section
+                class="gap-6 rounded-4xl bg-white p-6 shadow-lg shadow-purple-100 lg:items-center lg:p-10"
+            >
+                <div class="flex flex-col gap-5">
+                    <p
+                        class="text-6xl font-bold leading-none text-blue-500 lg:text-8xl"
+                    >
+                        404
+                    </p>
+                    <div class="flex flex-col gap-3">
+                        <h1
+                            class="text-3xl font-bold text-gray-900 lg:text-5xl"
+                        >
+                            Cette scene n'existe pas.
+                        </h1>
+                        <p class="max-w-2xl text-lg text-gray-600 lg:text-xl">
+                            Le rideau est baissé ici.
+                        </p>
+                    </div>
+
+                    <div class="flex gap-4 w-full">
+                        <div
+                            class="rounded-3xl border-2 border-blue-800 bg-white/85 p-5 shadow-lg shadow-purple-100"
+                        >
+                            <p
+                                class="mb-2 text-sm font-semibold uppercase text-blue-500"
+                            >
+                                Navigation
+                            </p>
+                            <p class="text-2xl font-bold text-gray-900">
+                                Programme perdu ?
+                            </p>
+                            <p class="mt-2 text-base text-gray-600">
+                                Revenez sur une page valide pour continuer votre
+                                visite.
+                            </p>
+                        </div>
+                        <div
+                            class="rounded-3xl bg-blue-200 p-5 text-gray-900 shadow-lg shadow-purple-100"
+                        >
+                            <p
+                                class="mb-2 text-sm font-semibold uppercase text-blue-800"
+                            >
+                                Raccourcis
+                            </p>
+                            <div
+                                class="flex flex-col gap-2 text-lg font-semibold"
+                            >
+                                <a
+                                    href="/programme"
+                                    class="transition-transform duration-300 hover:scale-102"
+                                >
+                                    Programme
+                                </a>
+                                <a
+                                    href="/infos"
+                                    class="transition-transform duration-300 hover:scale-[1.02]"
+                                >
+                                    Infos pratiques
+                                </a>
+                                <a
+                                    href="/contact"
+                                    class="transition-transform duration-300 hover:scale-[1.02]"
+                                >
+                                    Contact
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</Layout>

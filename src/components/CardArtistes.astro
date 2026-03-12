@@ -2,6 +2,7 @@
 import PbImage from "./PbImage.astro";
 import { formatDate } from "../../backend/helpers";
 import LocIcon from "../assets/icons/localisation.svg";
+import Date from "../assets/icons/date.svg";
 
 const { ...artistes } = Astro.props;
 ---
@@ -19,11 +20,7 @@ const { ...artistes } = Astro.props;
         <div class="gap-1 flex flex-col">
             <h2 class="text-xl font-bold text-blue-500">{artistes.nom}</h2>
             <div class="flex items-center">
-                <img
-                    src="/src/assets/icons/date.svg"
-                    alt="date"
-                    class="w-4 h-4 inline-block mr-1"
-                />
+                <Date class="text-blue-900 w-4 h-4 inline-block mr-1" />
                 <p class="text-zinc-900">{formatDate(artistes.date)}</p>
             </div>
             <div class="flex items-center">

@@ -1,7 +1,300 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ProgrammeIcon from "../assets/icons/programme.svg";
+import PbImage from "../components/PbImage.astro";
+import LocIcon from "../assets/icons/localisation.svg";
+import Arrow from "../assets/icons/arrow.svg";
+import Telecharger from "../assets/icons/telecharger.svg";
+import { allArtistes } from "../../backend/backend.mjs";
+import { formatTime } from "../../backend/helpers";
+
+const artistes = await allArtistes();
+
+// Le Js de cette page est realisé en tres grande partie à l'aide de l'IA, je ne savais pas comment procédé pour realisé ce genre de filtres multiples complexes.
+
+type Artist = (typeof artistes)[number];
+
+const toDayKey = (dateString: string) => {
+    const d = new Date(dateString);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+};
+
+const toDayLabel = (dateString: string) => {
+    const label = new Intl.DateTimeFormat("fr-FR", {
+        weekday: "long",
+        day: "numeric",
+    }).format(new Date(dateString));
+    return label.charAt(0).toUpperCase() + label.slice(1);
+};
+
+const toRangeLabel = (dateString: string) => {
+    const start = new Date(dateString);
+    const end = new Date(start.getTime() + 90 * 60 * 1000);
+    return `${formatTime(start)} - ${formatTime(end)}`;
+};
+
+const sortedArtistes = artistes.sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+);
+
+const days = [];
+const seenDayKeys = new Set();
+
+for (const artiste of sortedArtistes) {
+    const dayKey = toDayKey(artiste.date);
+    if (!seenDayKeys.has(dayKey)) {
+        seenDayKeys.add(dayKey);
+        days.push({ key: dayKey, label: toDayLabel(artiste.date) });
+    }
+}
+
+const defaultDay = days[0]?.key || "";
+
+const genres = Array.from(
+    new Set(sortedArtistes.map((artiste) => artiste.genre).filter(Boolean)),
+).sort((a, b) => a.localeCompare(b, "fr"));
+
+const scenes = Array.from(
+    new Set(
+        sortedArtistes
+            .map((artiste) => artiste.expand?.scene?.nom)
+            .filter(Boolean),
+    ),
+).sort((a, b) => a.localeCompare(b, "fr"));
+
+const dayPanels = days.map((day) => {
+    const dayArtistes = sortedArtistes.filter(
+        (artiste) => toDayKey(artiste.date) === day.key,
+    );
+
+    const slotsMap = new Map();
+
+    for (const artiste of dayArtistes) {
+        const slot = toRangeLabel(artiste.date);
+        if (!slotsMap.has(slot)) {
+            slotsMap.set(slot, []);
+        }
+        slotsMap.get(slot).push(artiste);
+    }
+
+    const slots = Array.from(slotsMap.entries()).map(([slot, items]) => ({
+        slot,
+        items,
+    }));
+
+    return { ...day, slots };
+});
 ---
 
 <Layout>
-    <p>programme</p>
+    <div class="bg-gray-100 pb-14">
+        <div class="mx-auto max-w-4xl px-4 py-6 lg:px-6 lg:py-8">
+            <section class="flex flex-col gap-4">
+                <div class="flex flex-wrap gap-2">
+                    {
+                        days.map((day) => (
+                            <button
+                                data-day-btn={day.key}
+                                class={`rounded-full px-5 py-2  lg:text-lg lg:font-semibold transition-colors ${day.key === defaultDay ? "bg-blue-300 text-gray-900" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                                type="button"
+                            >
+                                {day.label}
+                            </button>
+                        ))
+                    }
+                </div>
+
+                <div class="grid gap-3 grid-cols-2">
+                    <label class="relative">
+                        <select
+                            id="genre-filter"
+                            class="w-full appearance-none rounded-xl border border-gray-900 bg-white px-4 py-3 pr-11 lg:text-lg text-gray-700"
+                        >
+                            <option value="">Tous les genres</option>
+                            {
+                                genres.map((genre) => (
+                                    <option value={genre}>{genre}</option>
+                                ))
+                            }
+                        </select>
+                        <span
+                            class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                        >
+                            <Arrow class="h-6 w-6" />
+                        </span>
+                    </label>
+
+                    <label class="relative">
+                        <select
+                            id="scene-filter"
+                            class="w-full appearance-none rounded-xl border border-gray-900 bg-white px-4 py-3 pr-11 lg:text-lg text-gray-700"
+                        >
+                            <option value="">Toutes les scènes</option>
+                            {
+                                scenes.map((scene) => (
+                                    <option value={scene}>{scene}</option>
+                                ))
+                            }
+                        </select>
+                        <span
+                            class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                        >
+                            <Arrow class="h-6 w-6" />
+                        </span>
+                    </label>
+                </div>
+
+                <a
+                    href="#"
+                    class="mt-2 flex items-center justify-center gap-3 rounded-2xl bg-blue-300 px-5 py-4 text-xl font-semibold text-gray-900 shadow-lg shadow-gray-300/70 transition-transform duration-300 hover:scale-[1.01]"
+                >
+                    <Telecharger class="h-6 w-6" />
+                    Télécharger le programme PDF
+                </a>
+            </section>
+
+            <section class="mt-6">
+                {
+                    dayPanels.map((panel) => (
+                        <div
+                            data-day-panel={panel.key}
+                            class={panel.key === defaultDay ? "" : "hidden"}
+                        >
+                            {panel.slots.map((slot) => (
+                                <div class="mb-6">
+                                    <h3 class="mb-3 border-b border-gray-200 pb-3 lg:text-3xl font-semibold lg:font-bold text-gray-800">
+                                        {slot.slot}
+                                    </h3>
+
+                                    <div class="space-y-3">
+                                        {slot.items.map((artiste: Artist) => (
+                                            <a
+                                                href={`/artistes/${artiste.id}`}
+                                                data-card
+                                                data-genre={artiste.genre || ""}
+                                                data-scene={
+                                                    artiste.expand?.scene
+                                                        ?.nom || ""
+                                                }
+                                                class="flex items-center gap-3 rounded-2xl bg-gray-100 p-3 transition-transform duration-300 hover:scale-101"
+                                            >
+                                                <PbImage
+                                                    record={artiste}
+                                                    field="photoPrincipale"
+                                                    alt={artiste.nom}
+                                                    classImg="h-16 w-16 shrink-0 rounded-xl object-cover"
+                                                    thumb="200x200"
+                                                />
+
+                                                <div class="min-w-0">
+                                                    <p class="text-xl lg:text-2xl font-semibold text-gray-900">
+                                                        {artiste.nom}
+                                                    </p>
+                                                    <div class="mt-1 flex flex-wrap items-center gap-3 text-gray-500">
+                                                        <span class="rounded-full bg-blue-100 px-3 py-1 text-base  text-blue-700">
+                                                            {artiste.genre ||
+                                                                "Genre"}
+                                                        </span>
+                                                        <span class="flex items-center gap-1 text-base">
+                                                            <LocIcon class="h-4 w-4" />
+                                                            {artiste.expand
+                                                                ?.scene?.nom ||
+                                                                "Scène"}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ))
+                }
+            </section>
+        </div>
+    </div>
 </Layout>
+
+<script>
+    // @ts-nocheck
+    const dayButtons = document.querySelectorAll("[data-day-btn]");
+    const dayPanels = document.querySelectorAll("[data-day-panel]");
+    const genreFilter = document.getElementById("genre-filter");
+    const sceneFilter = document.getElementById("scene-filter");
+
+    let activeDay = dayButtons[0]?.getAttribute("data-day-btn") || "";
+
+    const updateActiveDayUI = () => {
+        dayButtons.forEach((button) => {
+            const isActive = button.getAttribute("data-day-btn") === activeDay;
+            button.classList.toggle("bg-blue-300", isActive);
+            button.classList.toggle("text-gray-900", isActive);
+            button.classList.toggle("bg-gray-200", !isActive);
+            button.classList.toggle("text-gray-700", !isActive);
+        });
+
+        dayPanels.forEach((panel) => {
+            const isVisible =
+                panel.getAttribute("data-day-panel") === activeDay;
+            panel.classList.toggle("hidden", !isVisible);
+        });
+    };
+
+    const applyFilters = () => {
+        const genreValue = genreFilter?.value || "";
+        const sceneValue = sceneFilter?.value || "";
+
+        const currentPanel = document.querySelector(
+            `[data-day-panel="${activeDay}"]`,
+        );
+        if (!currentPanel) {
+            return;
+        }
+
+        const slots = currentPanel.querySelectorAll("h3");
+
+        slots.forEach((slotTitle) => {
+            const wrapper = slotTitle.parentElement;
+            if (!wrapper) {
+                return;
+            }
+
+            const cards = wrapper.querySelectorAll("[data-card]");
+            let hasVisibleCard = false;
+
+            cards.forEach((card) => {
+                const cardGenre = card.getAttribute("data-genre") || "";
+                const cardScene = card.getAttribute("data-scene") || "";
+
+                const matchGenre = !genreValue || cardGenre === genreValue;
+                const matchScene = !sceneValue || cardScene === sceneValue;
+                const visible = matchGenre && matchScene;
+
+                card.classList.toggle("hidden", !visible);
+                if (visible) {
+                    hasVisibleCard = true;
+                }
+            });
+
+            wrapper.classList.toggle("hidden", !hasVisibleCard);
+        });
+    };
+
+    dayButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            activeDay = button.getAttribute("data-day-btn") || "";
+            updateActiveDayUI();
+            applyFilters();
+        });
+    });
+
+    genreFilter?.addEventListener("change", applyFilters);
+    sceneFilter?.addEventListener("change", applyFilters);
+
+    updateActiveDayUI();
+    applyFilters();
+</script>

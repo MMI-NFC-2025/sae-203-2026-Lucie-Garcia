@@ -1,7 +1,239 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ContactIcon from "../assets/icons/contact.svg";
+import CoordonneesIcon from "../assets/icons/coordonnees.svg";
+import LettreIcon from "../assets/icons/lettre.svg";
+import TelIcon from "../assets/icons/tel.svg";
+import ShareIcon from "../assets/icons/share.svg";
+import LocIcon from "../assets/icons/localisation.svg";
+import FacebookIcon from "../assets/icons/facebook.svg";
+import TwitterIcon from "../assets/icons/twitter.svg";
+import InstaIcon from "../assets/icons/insta.svg";
+import YtIcon from "../assets/icons/yt.svg";
 ---
 
 <Layout>
-    <p>contact</p>
+    <div class="bg-gray-100 text-gray-800">
+        <section
+            class="bg-linear-to-b from-slate-100 to-emerald-50/60 px-4 py-10 lg:py-14"
+        >
+            <div
+                class="mx-auto flex max-w-3xl flex-col items-center text-center"
+            >
+                <div
+                    class="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 text-blue-800 lg:h-24 lg:w-24"
+                >
+                    <ContactIcon class="h-9 w-9 lg:h-10 lg:w-10" />
+                </div>
+                <h1 class="text-4xl font-bold text-gray-400 lg:text-5xl">
+                    Contactez-nous
+                </h1>
+                <p
+                    class="mt-3 max-w-2xl leading-relaxed text-slate-500 lg:text-xl"
+                >
+                    Nous sommes là pour vous aider. N'hésitez pas à nous
+                    contacter pour toute question ou demande.
+                </p>
+            </div>
+        </section>
+
+        <section
+            class="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-6 lg:px-6 lg:py-10"
+        >
+            <div class="grid gap-10 lg:grid-cols-2 lg:items-start">
+                <article
+                    class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm lg:p-8"
+                >
+                    <div class="mb-6 flex items-center gap-3 text-blue-800">
+                        <LettreIcon class="h-6 w-6" />
+                        <h2
+                            class="text-2xl font-bold text-gray-800 lg:text-3xl"
+                        >
+                            Envoyez-nous un message
+                        </h2>
+                    </div>
+
+                    <form class="flex flex-col gap-5">
+                        <label class="flex flex-col gap-2">
+                            <span class="text-lg font-medium text-gray-800"
+                                >Nom complet</span
+                            >
+                            <input
+                                type="text"
+                                placeholder="Votre nom et prénom"
+                                class="rounded-2xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-700 placeholder:text-gray-300"
+                            />
+                        </label>
+
+                        <label class="flex flex-col gap-2">
+                            <span class="text-lg font-medium text-gray-800"
+                                >Email</span
+                            >
+                            <input
+                                type="email"
+                                placeholder="votre@email.com"
+                                class="rounded-2xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-700 placeholder:text-gray-300"
+                            />
+                        </label>
+
+                        <label class="flex flex-col gap-2">
+                            <span class="text-lg font-medium text-gray-800"
+                                >Sujet</span
+                            >
+                            <input
+                                type="text"
+                                placeholder="sujet du message"
+                                class="rounded-2xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-700 placeholder:text-gray-300"
+                            />
+                        </label>
+
+                        <label class="flex flex-col gap-2">
+                            <span class="text-lg font-medium text-gray-800"
+                                >Message</span
+                            >
+                            <textarea
+                                placeholder="Décrivez votre demande en détail..."
+                                rows="5"
+                                class="rounded-2xl border border-gray-300 bg-white px-4 py-4 text-lg text-gray-700 placeholder:text-gray-300"
+                            ></textarea>
+                        </label>
+
+                        <button
+                            type="submit"
+                            class="mt-2 flex items-center justify-center gap-3 rounded-2xl bg-blue-800 px-5 py-4 text-xl font-semibold text-white transition-transform duration-300 hover:scale-101"
+                        >
+                            <LettreIcon class="h-5 w-5" />
+                            Envoyer le message
+                        </button>
+                    </form>
+                </article>
+
+                <div class="flex flex-col gap-10">
+                    <article
+                        class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm lg:p-8"
+                    >
+                        <div
+                            class="mb-6 flex items-center gap-3 text-amber-500"
+                        >
+                            <CoordonneesIcon class="h-6 w-6" />
+                            <h2
+                                class="text-2xl font-bold text-gray-800 lg:text-3xl"
+                            >
+                                Nos coordonnées
+                            </h2>
+                        </div>
+
+                        <div class="flex flex-col gap-4">
+                            <div class="flex gap-4 rounded-2xl bg-gray-100 p-4">
+                                <div
+                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-blue-800"
+                                >
+                                    <ContactIcon class="h-6 w-6" />
+                                </div>
+                                <div>
+                                    <p
+                                        class="text-lg font-semibold text-gray-800"
+                                    >
+                                        Email
+                                    </p>
+                                    <p class="font-light text-slate-500">
+                                        contact@exemple.com
+                                    </p>
+                                    <p class="font-light text-slate-500">
+                                        support@exemple.com
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4 rounded-2xl bg-gray-100 p-4">
+                                <div
+                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-500"
+                                >
+                                    <TelIcon class="h-6 w-6" />
+                                </div>
+                                <div>
+                                    <p
+                                        class="text-lg font-semibold text-gray-800"
+                                    >
+                                        Téléphone
+                                    </p>
+                                    <p class="font-light text-slate-500">
+                                        +33 1 23 45 67 89
+                                    </p>
+                                    <p class="font-light text-slate-500">
+                                        Lun-Ven 9h-18h
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4 rounded-2xl bg-gray-100 p-4">
+                                <div
+                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-500"
+                                >
+                                    <LocIcon class="h-6 w-6" />
+                                </div>
+                                <div>
+                                    <p
+                                        class="text-lg font-semibold text-gray-800"
+                                    >
+                                        Adresse
+                                    </p>
+                                    <p class="font-light text-slate-500">
+                                        Centre-ville de Belfort
+                                    </p>
+                                    <p class="font-light text-slate-500">
+                                        90000 Belfort, France
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article
+                        class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm lg:p-8"
+                    >
+                        <div class="mb-6 flex items-center gap-3 text-blue-800">
+                            <ShareIcon class="h-6 w-6" />
+                            <h2
+                                class="text-2xl font-bold text-gray-800 lg:text-3xl"
+                            >
+                                Suivez-nous
+                            </h2>
+                        </div>
+
+                        <div class="grid gap-4 grid-cols-2">
+                            <a
+                                href="https://www.facebook.com"
+                                class="flex items-center gap-3 rounded-2xl bg-blue-50 px-5 py-4 text-lg font-medium text-blue-600 transition-transform duration-300 hover:scale-101"
+                            >
+                                <FacebookIcon class="h-6 w-6" />
+                                Facebook
+                            </a>
+                            <a
+                                href="https://www.twitter.com"
+                                class="flex items-center gap-3 rounded-2xl bg-sky-50 px-5 py-4 text-lg font-medium text-sky-600 transition-transform duration-300 hover:scale-101"
+                            >
+                                <TwitterIcon class="h-6 w-6" />
+                                Twitter
+                            </a>
+                            <a
+                                href="https://www.youtube.com"
+                                class="flex items-center gap-3 rounded-2xl bg-indigo-50 px-5 py-4 text-lg font-medium text-indigo-600 transition-transform duration-300 hover:scale-101"
+                            >
+                                <YtIcon class="h-6 w-6" />
+                                YouTube
+                            </a>
+                            <a
+                                href="https://www.instagram.com"
+                                class="flex items-center gap-3 rounded-2xl bg-pink-50 px-5 py-4 text-lg font-medium text-pink-600 transition-transform duration-300 hover:scale-101"
+                            >
+                                <InstaIcon class="h-6 w-6" />
+                                Instagram
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </div>
 </Layout>

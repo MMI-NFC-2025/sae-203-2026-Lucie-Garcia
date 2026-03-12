@@ -1,6 +1,15 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getScene } from "../../../backend/backend.mjs";
+import PbImage from "../../components/PbImage.astro";
+import DateIcon from "../../assets/icons/date.svg";
+import HeureIcon from "../../assets/icons/heure.svg";
+import LocIcon from "../../assets/icons/localisation.svg";
+import ScenesIcon from "../../assets/icons/scenes.svg";
+import BilletsIcon from "../../assets/icons/billets.svg";
+import LitIcon from "../../assets/icons/lit.svg";
+import BusIcon from "../../assets/icons/bus.svg";
+import { getScene, getScenesBySceneID } from "../../../backend/backend.mjs";
+import { formatDay, formatTime } from "../../../backend/helpers";
 
 const id = Astro.params.id;
 
@@ -9,9 +18,256 @@ if (!scene) {
     console.error(`Scène with id ${id} not found`);
     return Astro.redirect("/scenes");
 }
+
+const sceneArtists = await getScenesBySceneID(id);
+type SceneArtist = (typeof sceneArtists)[number];
+type DayGroup = { label: string; items: SceneArtist[] };
+
+const artistes = sceneArtists.sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+);
+
+const artistesByDay = artistes.reduce<DayGroup[]>((groups, artiste) => {
+    const label = formatDay(artiste.date);
+    const existingGroup = groups.find((group) => group.label === label);
+
+    if (existingGroup) {
+        existingGroup.items.push(artiste);
+    } else {
+        groups.push({ label, items: [artiste] });
+    }
+
+    return groups;
+}, []);
+
+const capacityLabel = scene.capacite
+    ? new Intl.NumberFormat("fr-FR").format(scene.capacite)
+    : null;
 ---
 
 <Layout>
-    <p>scenes</p>
-    <p>{scene.nom}</p>
+    <div class="bg-white pb-12">
+        <div
+            class="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-6 lg:px-8 lg:py-10"
+        >
+            <section class="grid gap-6 lg:grid-cols-2 lg:items-start">
+                <div
+                    class="overflow-hidden rounded-xl bg-blue-500 shadow-lg shadow-purple-100"
+                >
+                    {
+                        scene.photo ? (
+                            <PbImage
+                                record={scene}
+                                field="photo"
+                                alt={scene.nom}
+                                classImg="h-72 w-full object-cover lg:h-104"
+                                thumb="1400x900"
+                            />
+                        ) : (
+                            <div class="h-72 w-full bg-blue-500 lg:h-104" />
+                        )
+                    }
+                </div>
+
+                <div
+                    class="flex flex-col gap-5 rounded-4xl bg-white p-6 shadow-lg shadow-purple-100 lg:p-8"
+                >
+                    <div>
+                        <h1
+                            class="text-4xl font-bold text-gray-900 lg:text-5xl"
+                        >
+                            {scene.nom}
+                        </h1>
+                        <p class="mt-4 text-lg leading-relaxed text-gray-600">
+                            {
+                                scene.description ||
+                                    "Aucune description disponible."
+                            }
+                        </p>
+                    </div>
+
+                    <div class="grid gap-3 sm:grid-cols-2">
+                        <div class="rounded-3xl bg-gray-100 p-4">
+                            <div
+                                class="mb-2 flex items-center gap-2 text-blue-800"
+                            >
+                                <LocIcon class="h-5 w-5" />
+                                <p class="font-semibold text-gray-900">
+                                    Localisation
+                                </p>
+                            </div>
+                            <p class="text-sm leading-relaxed text-gray-600">
+                                {
+                                    scene.localisation ||
+                                        "Information indisponible."
+                                }
+                            </p>
+                        </div>
+                        <div class="rounded-3xl bg-gray-100 p-4">
+                            <div
+                                class="mb-2 flex items-center gap-2 text-blue-800"
+                            >
+                                <ScenesIcon class="h-5 w-5" />
+                                <p class="font-semibold text-gray-900">
+                                    Capacité
+                                </p>
+                            </div>
+                            <p class="text-3xl font-bold text-gray-900">
+                                {capacityLabel ? `${capacityLabel}+` : "-"}
+                            </p>
+                            <p class="text-sm text-gray-600">festivaliers</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="rounded-4xl p-4 lg:p-6">
+                    <div class="mb-5 flex items-center gap-3">
+                        <h2 class="text-3xl font-bold text-gray-900">
+                            Programmation
+                        </h2>
+                    </div>
+
+                    {
+                        artistesByDay.length > 0 ? (
+                            <div class="max-lg:flex max-lg:flex-col lg:grid-cols-3 lg:grid gap-5">
+                                {artistesByDay.map((group) => (
+                                    <section class="rounded-3xl bg-gray-100 p-4 lg:p-5">
+                                        <div class="mb-4 flex items-center gap-2 text-blue-800">
+                                            <DateIcon class="h-5 w-5" />
+                                            <h3 class="text-xl font-semibold text-gray-900">
+                                                {group.label}
+                                            </h3>
+                                        </div>
+
+                                        <div class="flex flex-col gap-3">
+                                            {group.items.map((artiste) => (
+                                                <a
+                                                    href={`/artistes/${artiste.id}`}
+                                                    class="flex items-center justify-between rounded-2xl bg-white px-4 py-4 transition-transform duration-300 hover:scale-102"
+                                                >
+                                                    <div>
+                                                        <p class="text-xl  text-gray-900">
+                                                            {artiste.nom}
+                                                        </p>
+                                                        <div class="mt-1 flex items-center gap-2 text-gray-500">
+                                                            <HeureIcon class="h-4 w-4" />
+                                                            <p>
+                                                                {formatTime(
+                                                                    artiste.date,
+                                                                )}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </section>
+                                ))}
+                            </div>
+                        ) : (
+                            <div class="rounded-3xl bg-white p-5 text-gray-600">
+                                Aucun artiste n'est encore programmé sur cette
+                                scène.
+                            </div>
+                        )
+                    }
+                </div>
+            </section>
+
+            <section>
+                <div class="rounded-4xl p-4 lg:p-6">
+                    <h2 class="mb-5 text-3xl font-bold text-gray-900">
+                        Infos Pratiques
+                    </h2>
+
+                    <div class="flex flex-col lg:grid-cols-3 lg:grid gap-6">
+                        <article
+                            class="rounded-3xl bg-linear-to-r from-blue-500 to-blue-300 p-5 text-white"
+                        >
+                            <div class="mb-4 flex items-center gap-2">
+                                <BilletsIcon class="h-6 w-6" />
+                                <h3 class="text-2xl font-bold">Tarifs</h3>
+                            </div>
+
+                            <div class="space-y-3 text-xl">
+                                <div class="flex items-center justify-between">
+                                    <p>Pass 1 jour</p>
+                                    <p class="font-bold">89EUR</p>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <p>Pass 2 jours</p>
+                                    <p class="font-bold">159EUR</p>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <p>VIP Pass</p>
+                                    <p class="font-bold">299EUR</p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="rounded-3xl bg-gray-100 p-5">
+                            <div
+                                class="mb-4 flex items-center gap-2 text-blue-800"
+                            >
+                                <LitIcon class="h-6 w-6 text-blue-800" />
+                                <h3 class="text-xl font-bold text-gray-900">
+                                    Hébergements
+                                </h3>
+                            </div>
+
+                            <div class="rounded-2xl bg-white px-4 py-4">
+                                <p class="text-xl font-medium text-gray-900">
+                                    Hôtels partenaires
+                                </p>
+                                <p
+                                    class="mt-1 text-lg font-light text-gray-600"
+                                >
+                                    Réductions jusqu'à 20%
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="rounded-3xl bg-gray-100 p-5">
+                            <div
+                                class="mb-4 flex items-center gap-2 text-blue-800"
+                            >
+                                <BusIcon class="h-6 w-6" />
+                                <h3 class="text-xl font-bold text-gray-900">
+                                    Transports
+                                </h3>
+                            </div>
+
+                            <div class="flex flex-col gap-4">
+                                <div class="rounded-2xl bg-white px-4 py-4">
+                                    <p
+                                        class="text-xl font-medium text-gray-900"
+                                    >
+                                        Navettes gratuites
+                                    </p>
+                                    <p class="mt-1 text-lg text-gray-600">
+                                        Gare -> Festival
+                                    </p>
+                                </div>
+
+                                <div class="rounded-2xl bg-white px-4 py-4">
+                                    <p
+                                        class="text-xl font-medium text-gray-900"
+                                    >
+                                        Parking
+                                    </p>
+                                    <p
+                                        class="mt-1 text-lg font-light text-gray-600"
+                                    >
+                                        15EUR/jour
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 </Layout>

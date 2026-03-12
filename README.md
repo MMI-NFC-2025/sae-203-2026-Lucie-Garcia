@@ -2,7 +2,8 @@
 
 - Nom: GARCIA
 - Prénom: Lucie
-- url: 
+- url netlify: https://mellow-peony-387f7f.netlify.app
+- url: https://les-rives-du-territoire.lucie-garcia.fr
 
 url pocket base : https://rives-du-territoire.lucie-garcia.fr/_/
 

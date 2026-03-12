@@ -69,3 +69,13 @@ export async function modifyArtiste(id, artisteData) {
 export async function deleteArtiste(id) {
     return await pb.collection("artistes").delete(id);
 }
+
+export async function loginUserWithEmail(email, password) {
+    const authData = await pb.collection("users").authWithPassword(email, password);
+    pb.authStore.clear();
+    return authData;
+}
+
+export async function logoutUser() {
+    pb.authStore.clear();
+}

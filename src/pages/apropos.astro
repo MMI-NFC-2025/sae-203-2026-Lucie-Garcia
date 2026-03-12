@@ -1,7 +1,345 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ProfilIcon from "../assets/icons/profil.svg";
+import CoeurIcon from "../assets/icons/coeur.svg";
+import MainsIcon from "../assets/icons/mains.svg";
+import FeuilleIcon from "../assets/icons/feuille.svg";
+import Music from "../assets/icons/scenes.svg";
+import Time from "../assets/icons/time.svg";
+import Lumiere from "../assets/icons/lumiere.svg";
+import Photo from "../assets/icons/photo.svg";
+import Arrow from "../assets/icons/arrow.svg";
+import { allArtistes, pb } from "../../backend/backend.mjs";
+
+const artistes = await allArtistes();
+const artistesAvecPhoto = artistes.filter((artiste) => artiste.photoPrincipale);
 ---
 
 <Layout>
-    <p>propos</p>
+    <section class="bg-zinc-100 text-slate-900">
+        <div class="mx-auto bg-zinc-100">
+            <section
+                class="bg-grad-diagonal px-4 pb-8 pt-5 text-center text-slate-900 lg:grid lg:grid-cols-3 lg:items-center lg:gap-8"
+            >
+                <div
+                    class="mx-auto flex h-22 w-22 items-center justify-center rounded-full bg-white/25 ring-1 ring-white/25 backdrop-blur-sm"
+                >
+                    <Music class="h-10 w-10 text-white" />
+                </div>
+                <h2
+                    class="mt-5 text-3xl lg:text-5xl font-semibold text-slate-950 font-deco"
+                >
+                    À propos du Festival
+                </h2>
+                <p
+                    class="mx-auto mt-3 max-w-xs text-sm leading-6 text-slate-700"
+                >
+                    Découvrez l'histoire, l'équipe et les valeurs qui font de
+                    notre festival un événement unique.
+                </p>
+            </section>
+
+            <section class="px-4 py-6">
+                <div class="mb-5 flex items-center gap-2 text-slate-900">
+                    <Time class="h-5 w-5 text-blue-500" />
+                    <h3 class="text-2xl font-medium font-deco lg:text-4xl">
+                        Historique
+                    </h3>
+                </div>
+
+                <div class="space-y-4 grid lg:grid-cols-3 gap-3">
+                    <article
+                        class="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-zinc-200"
+                    >
+                        <div class="flex gap-3">
+                            <div
+                                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm font-semibold text-white"
+                            >
+                                1
+                            </div>
+                            <div>
+                                <p class="text-xl font-semibold text-slate-800">
+                                    2010 - Les débuts
+                                </p>
+                                <p
+                                    class="mt-2 text-sm leading-6 text-slate-600"
+                                >
+                                    Création du festival avec une vision simple
+                                    : rassembler les artistes locaux et créer
+                                    des liens authentiques avec le public.
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article
+                        class="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-zinc-200"
+                    >
+                        <div class="flex gap-3">
+                            <div
+                                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-500 text-sm font-semibold text-white"
+                            >
+                                2
+                            </div>
+                            <div>
+                                <p class="text-xl font-semibold text-slate-800">
+                                    2015 - Expansion
+                                </p>
+                                <p
+                                    class="mt-2 text-sm leading-6 text-slate-600"
+                                >
+                                    Ouverture à des artistes internationaux tout
+                                    en gardant notre identité locale et notre
+                                    engagement écologique.
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article
+                        class="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-zinc-200 mb-4"
+                    >
+                        <div class="flex gap-3">
+                            <div
+                                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-900 text-sm font-semibold text-white"
+                            >
+                                3
+                            </div>
+                            <div>
+                                <p class="text-xl font-semibold text-slate-800">
+                                    2020 - Adaptation
+                                </p>
+                                <p
+                                    class="mt-2 text-sm leading-6 text-slate-600"
+                                >
+                                    Réinvention du format avec des expériences
+                                    hybrides et un engagement renforcé pour la
+                                    durabilité.
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="px-4 py-2">
+                <div class="mb-5 flex items-center gap-2 text-slate-900">
+                    <ProfilIcon class="h-5 w-5 text-blue-500" />
+                    <h3 class="text-2xl font-medium font-deco lg:text-4xl">
+                        Notre équipe
+                    </h3>
+                </div>
+
+                <div class="space-y-4 grid lg:grid-cols-3 gap-3">
+                    <article
+                        class="flex items-center gap-3 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-zinc-200"
+                    >
+                        <div
+                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-amber-200 via-orange-300 to-rose-300 text-sm font-bold text-white"
+                        >
+                            SM
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-900">
+                                Sienna Mcguire
+                            </h4>
+                            <p class="text-sm font-semibold text-blue-600">
+                                Directrice artistique
+                            </p>
+                            <p class="mt-1 text-sm leading-5 text-slate-600">
+                                Passionnée de musique depuis 15 ans
+                            </p>
+                        </div>
+                    </article>
+
+                    <article
+                        class="flex items-center gap-3 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-zinc-200"
+                    >
+                        <div
+                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-stone-200 via-neutral-300 to-slate-400 text-sm font-bold text-white"
+                        >
+                            JC
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-900">
+                                Jason Cooper
+                            </h4>
+                            <p class="text-sm font-semibold text-blue-600">
+                                Coordinateur événements
+                            </p>
+                            <p class="mt-1 text-sm leading-5 text-slate-600">
+                                Expert en production culturelle
+                            </p>
+                        </div>
+                    </article>
+
+                    <article
+                        class="flex items-center gap-3 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-zinc-200 mb-4"
+                    >
+                        <div
+                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-cyan-500 via-sky-500 to-blue-600 text-sm font-bold text-white"
+                        >
+                            CR
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-900">
+                                Chloé reese
+                            </h4>
+                            <p class="text-sm font-semibold text-blue-600">
+                                Responsable durabilité
+                            </p>
+                            <p class="mt-1 text-sm leading-5 text-slate-600">
+                                Spécialiste en événements éco-responsables
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="px-4 py-6 pb-8">
+                <div class="mb-5 flex items-center gap-2 text-slate-900">
+                    <CoeurIcon class="h-5 w-5 text-blue-700" />
+                    <h3 class="text-2xl font-medium font-deco lg:text-4xl">
+                        Nos valeurs
+                    </h3>
+                </div>
+
+                <div class="space-y-4 grid lg:grid-cols-3 gap-3">
+                    <article
+                        class="rounded-2xl bg-sky-200 p-4 text-slate-900 shadow-sm ring-1 ring-black/5"
+                    >
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="flex h-10 w-10 items-center justify-center rounded-full bg-sky-800 text-white"
+                            >
+                                <Lumiere class="h-5 w-5" />
+                            </div>
+                            <h4 class="text-xl font-semibold">Créativité</h4>
+                        </div>
+                        <p class="mt-4 text-sm leading-7 text-slate-700">
+                            Nous encourageons l'innovation artistique et offrons
+                            une plateforme aux talents émergents pour exprimer
+                            leur vision unique.
+                        </p>
+                    </article>
+
+                    <article
+                        class="rounded-2xl bg-pink-200 p-4 text-slate-900 shadow-sm ring-1 ring-black/5"
+                    >
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="flex h-10 w-10 items-center justify-center rounded-full bg-pink-500 text-white"
+                            >
+                                <MainsIcon class="h-5 w-5" />
+                            </div>
+                            <h4 class="text-xl font-semibold">Proximité</h4>
+                        </div>
+                        <p class="mt-4 text-sm leading-7 text-slate-700">
+                            Nous créons des liens authentiques entre artistes et
+                            public, privilégiant les rencontres humaines et les
+                            échanges sincères.
+                        </p>
+                    </article>
+
+                    <article
+                        class="rounded-2xl bg-green-200 p-4 text-slate-900 shadow-sm ring-1 ring-black/5 mb-4"
+                    >
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="flex h-10 w-10 items-center justify-center rounded-full bg-green-700 text-white"
+                            >
+                                <FeuilleIcon class="h-5 w-5" />
+                            </div>
+                            <h4 class="text-xl font-semibold">Durabilité</h4>
+                        </div>
+                        <p class="mt-4 text-sm leading-7 text-slate-700">
+                            Nous nous engageons pour un festival
+                            éco-responsable, respectueux de l'environnement et
+                            des générations futures.
+                        </p>
+                    </article>
+                </div>
+            </section>
+            <section class="px-4 py-2">
+                <div class="mb-5 flex items-center gap-2 text-slate-900">
+                    <Photo class="h-5 w-5 text-blue-900" />
+                    <h3 class="text-2xl font-medium font-deco lg:text-4xl">
+                        Galerie Photos
+                    </h3>
+                </div>
+
+                {
+                    artistesAvecPhoto.length > 0 ? (
+                        <div class="relative pb-4">
+                            <button
+                                type="button"
+                                id="carousel-prev"
+                                aria-label="Photo précédente"
+                                class="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow ring-1 ring-zinc-200 hover:bg-white"
+                            >
+                                <Arrow class="h-5 w-5 rotate-90 text-blue-700" />
+                            </button>
+
+                            <button
+                                type="button"
+                                id="carousel-next"
+                                aria-label="Photo suivante"
+                                class="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow ring-1 ring-zinc-200 hover:bg-white"
+                            >
+                                <Arrow class="h-5 w-5 -rotate-90 text-blue-700" />
+                            </button>
+
+                            <div
+                                id="apropos-carousel"
+                                class="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                            >
+                                <div class="flex snap-x snap-mandatory gap-4">
+                                    {artistesAvecPhoto.map((artiste) => (
+                                        <article class=" snap-center rounded-2xl  min-w-80">
+                                            <img
+                                                src={pb.files.getURL(
+                                                    artiste,
+                                                    artiste.photoPrincipale,
+                                                    { thumb: "1200x800" },
+                                                )}
+                                                alt={artiste.nom}
+                                                class="h-56 w-full rounded-xl object-cover"
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
+                                        </article>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <p class="text-sm text-slate-600">
+                            Aucune photo disponible pour le moment.
+                        </p>
+                    )
+                }
+            </section>
+        </div>
+    </section>
 </Layout>
+
+<script>
+    const carousel = document.querySelector("#apropos-carousel");
+    const prevBtn = document.querySelector("#carousel-prev");
+    const nextBtn = document.querySelector("#carousel-next");
+
+    if (carousel && prevBtn && nextBtn) {
+        const getStep = () => {
+            const firstCard = carousel.querySelector("article");
+            return firstCard ? firstCard.clientWidth + 16 : 320;
+        };
+
+        prevBtn.addEventListener("click", () => {
+            carousel.scrollBy({ left: -getStep(), behavior: "smooth" });
+        });
+
+        nextBtn.addEventListener("click", () => {
+            carousel.scrollBy({ left: getStep(), behavior: "smooth" });
+        });
+    }
+</script>

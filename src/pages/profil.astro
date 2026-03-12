@@ -1,7 +1,144 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ProfilIcon from "../assets/icons/profil.svg";
+import MailIcon from "../assets/icons/lettre.svg";
+import LockIcon from "../assets/icons/infos.svg";
+import { loginUserWithEmail, logoutUser } from "../../backend/backend.mjs";
+
+let message = "";
+let messageType = "info";
+let isConnected = false;
+let connectedEmail = "";
+
+if (Astro.request.method === "POST") {
+    const formData = await Astro.request.formData();
+    const action = formData.get("action");
+
+    if (action === "login") {
+        const email = formData.get("email");
+        const password = formData.get("password");
+
+        try {
+            const authData = await loginUserWithEmail(email, password);
+            isConnected = true;
+            connectedEmail = authData.record.email;
+            message = "Connexion réussie !";
+            messageType = "success";
+        } catch (error) {
+            message = "Échec de la connexion ";
+            messageType = "error";
+        }
+    } else if (action === "logout") {
+        await logoutUser();
+        isConnected = false;
+        connectedEmail = "";
+        message = "Déconnexion réussie.";
+        messageType = "success";
+    }
+}
 ---
 
 <Layout>
-    <p>profil</p>
+    <section class="bg-zinc-100 px-4 py-8 text-slate-900">
+        <div class="mx-auto w-full max-w-md">
+            <div
+                class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-zinc-200"
+            >
+                <div class="mb-6 text-center">
+                    <div
+                        class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-100"
+                    >
+                        <ProfilIcon class="h-8 w-8 text-blue-700" />
+                    </div>
+                    <h2 class="mt-4 text-3xl font-semibold font-deco">
+                        Connexion
+                    </h2>
+                    <p class="mt-2 text-sm text-slate-600">
+                        Connecte-toi avec ton email et ton mot de passe.
+                    </p>
+                </div>
+
+                {
+                    isConnected ? (
+                        <div class="rounded-2xl bg-emerald-50 p-4 ring-1 ring-emerald-200">
+                            <p class="text-sm text-emerald-800">
+                                Tu es connecté(e) avec :
+                            </p>
+                            <p class="mt-1 text-lg font-semibold text-emerald-900">
+                                {connectedEmail}
+                            </p>
+
+                            <form method="POST" class="mt-4">
+                                <input
+                                    type="hidden"
+                                    name="action"
+                                    value="logout"
+                                />
+                                <button
+                                    type="submit"
+                                    class="w-full rounded-xl bg-emerald-600 py-2.5 font-semibold text-white hover:bg-emerald-700"
+                                >
+                                    Se déconnecter
+                                </button>
+                            </form>
+                        </div>
+                    ) : (
+                        <form method="POST" class="space-y-4">
+                            <input type="hidden" name="action" value="login" />
+                            <label class="block">
+                                <span class="mb-2 flex items-center gap-2 text-sm font-medium text-slate-700">
+                                    <MailIcon class="h-4 w-4 text-blue-600" />
+                                    Email
+                                </span>
+                                <input
+                                    name="email"
+                                    type="email"
+                                    required
+                                    autocomplete="email"
+                                    class="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-slate-900 outline-none ring-blue-400 transition focus:ring-2"
+                                    placeholder="ton@email.com"
+                                />
+                            </label>
+
+                            <label class="block">
+                                <span class="mb-2 flex items-center gap-2 text-sm font-medium text-slate-700">
+                                    <LockIcon class="h-4 w-4 text-blue-600" />
+                                    Mot de passe
+                                </span>
+                                <input
+                                    name="password"
+                                    type="password"
+                                    required
+                                    autocomplete="current-password"
+                                    class="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-slate-900 outline-none ring-blue-400 transition focus:ring-2"
+                                    placeholder="••••••••"
+                                />
+                            </label>
+
+                            <button
+                                type="submit"
+                                class="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
+                            >
+                                Se connecter
+                            </button>
+                        </form>
+                    )
+                }
+
+                {
+                    message && (
+                        <p
+                            class:list={[
+                                "mt-4 min-h-6 text-sm",
+                                messageType === "error" && "text-red-600",
+                                messageType === "success" && "text-emerald-700",
+                            ]}
+                        >
+                            {message}
+                        </p>
+                    )
+                }
+            </div>
+        </div>
+    </section>
 </Layout>
